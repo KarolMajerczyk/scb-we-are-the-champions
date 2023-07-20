@@ -1,3 +1,30 @@
+:root {
+  --clr-primary-300: #8f8f8f;
+  --clr-primary-400: #444059;
+  --clr-primary-500: #312e3e;
+  --clr-primary-800: #1b1924;
+  --clr-primary-900: #000000;
+
+  --clr-secondary-100: #ffffff;
+
+  --clr-accent-400: #28a9f1;
+
+  --ff-base: "Inter", sans-serif;
+  --ff-accent: "Josefin Sans", sans-serif;
+
+  --fw-regular: 400;
+  --fw-bold: 700;
+
+  --fs-300: 14px;
+  --fs-350: 15px;
+  --fs-400: 16px;
+  --fs-600: 20px;
+  --fs-650: 22px;
+  --fs-700: 25px;
+  --fs-800: 50px;
+  --fs-900: 150px;
+}
+
 *,
 *::before,
 *::after {
@@ -24,4 +51,210 @@ svg,
 video {
   display: block;
   max-width: 100%;
+}
+
+body {
+  background: var(--clr-primary-800);
+  color: var(--clr-secondary-100);
+  font-family: var(--ff-base);
+
+  display: grid;
+  justify-content: center;
+}
+
+#app-container {
+  max-width: 1440px;
+  height: 100vh;
+}
+
+@media screen and (min-width: 700px) {
+  #app-container {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+  }
+}
+
+.sidebar {
+  background: var(--clr-primary-500);
+  padding: 30px;
+
+  display: grid;
+  align-content: center;
+  gap: 30px;
+
+  max-height: 100vh;
+
+  position: relative;
+}
+
+.logo {
+  text-align: center;
+}
+
+.logo-icon {
+  font-size: clamp(var(--fs-800), 15vw, var(--fs-900));
+  margin-bottom: 20px;
+}
+
+.logo-title {
+  font-family: var(--ff-accent);
+  font-weight: var(--fw-bold);
+  font-size: clamp(var(--fs-600), 5vw, var(--fs-700));
+
+  line-height: 1.3;
+}
+
+.form {
+  display: grid;
+  gap: 20px;
+}
+
+.form-label {
+  display: none;
+}
+
+.form-input {
+  background: var(--clr-primary-400);
+  padding: 10px;
+  text-align: center;
+
+  border: none;
+  border-radius: 5px;
+  color: inherit;
+}
+
+#endorsement-input {
+  min-height: 150px;
+  padding: 20px;
+}
+
+.form-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+
+  margin-top: 10px;
+}
+
+#toggle-button {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+
+  background: var(--clr-accent-400);
+  padding: 10px;
+  border-radius: 5px;
+
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+#toggle-button:hover {
+  transform: scale(1.1);
+}
+
+.hidden {
+  display: none;
+}
+
+@media screen and (min-width: 700px) {
+  #endorsement-form {
+    display: grid;
+  }
+
+  #toggle-button {
+    display: none;
+  }
+}
+
+.button {
+  background: var(--clr-accent-400);
+  font-family: var(--ff-accent);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-650);
+
+  color: inherit;
+
+  padding: 10px 20px;
+  border: none;
+  border-radius: 3px;
+
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.button:hover {
+  transform: scale(1.1);
+}
+
+.collection {
+  padding: clamp(20px, 5vw, 40px);
+}
+
+.collection-title {
+  font-family: var(--ff-accent);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-600);
+
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.collection-items {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 25px;
+}
+
+.message {
+  background: var(--clr-secondary-100);
+  color: var(--clr-primary-800);
+  font-size: var(--fs-300);
+  border-radius: 5px;
+
+  padding: 20px;
+
+  display: grid;
+  gap: 15px;
+
+  flex: 1 1 300px;
+  max-width: 400px;
+
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.message:hover {
+  transform: scale(1.02);
+}
+
+.message-receiver,
+.message-sender {
+  font-weight: var(--fw-bold);
+}
+
+.message-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.message-likes {
+  color: var(--clr-primary-900);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-400);
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.message-likes span {
+  color: var(--clr-accent-400);
+  transition: all 0.3s ease;
+}
+
+.message-likes span:hover {
+  transform: scale(1.3);
 }

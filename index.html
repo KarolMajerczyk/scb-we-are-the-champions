@@ -7,40 +7,59 @@
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"
     />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,1,0"
+    />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Josefin+Sans:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="index.css" />
     <title>We are the champions</title>
   </head>
   <body>
     <main id="app-container">
       <div class="sidebar">
+        <span id="toggle-button" class="material-symbols-outlined"> add </span>
         <div class="logo">
           <span class="logo-icon material-symbols-outlined">
             sports_martial_arts
           </span>
           <h1 class="logo-title">We are the Champions</h1>
         </div>
-        <form id="endorsement-form" class="form" action="#">
-          <label for="sender-input"></label>
+        <form id="endorsement-form" class="form hidden" action="#">
+          <label class="form-label" for="sender-input"></label>
           <input
             id="sender-input"
             class="form-input"
             type="text"
             placeholder="From"
+            required
           />
-          <label for="receiver-input"></label>
+          <label class="form-label" for="receiver-input"></label>
           <input
             id="receiver-input"
             class="form-input"
             type="text"
             placeholder="To"
+            required
           />
-          <label for="endorsement-input"></label>
-          <input
+          <label class="form-label" for="endorsement-input"></label>
+          <textarea
             id="endorsement-input"
             class="form-input"
-            type="textarea"
             placeholder="Write your endorsement here"
-          />
+            maxlength="250"
+            spellcheck="false"
+            required
+          ></textarea>
+          <div class="form-buttons">
+            <button class="button" type="submit">Publish</button>
+          </div>
         </form>
       </div>
       <div class="collection">
@@ -54,7 +73,9 @@
             </p>
             <div class="message-info">
               <p class="message-sender">From Sindre</p>
-              <p class="message-likes">7</p>
+              <p class="message-likes">
+                <span class="material-symbols-outlined"> thumb_up </span> 7
+              </p>
             </div>
           </div>
           <div class="message">
@@ -65,7 +86,9 @@
             </p>
             <div class="message-info">
               <p class="message-sender">From Sindre</p>
-              <p class="message-likes">7</p>
+              <p class="message-likes">
+                <span class="material-symbols-outlined"> thumb_up </span> 7
+              </p>
             </div>
           </div>
           <div class="message">
@@ -76,7 +99,9 @@
             </p>
             <div class="message-info">
               <p class="message-sender">From Sindre</p>
-              <p class="message-likes">7</p>
+              <p class="message-likes">
+                <span class="material-symbols-outlined"> thumb_up </span> 7
+              </p>
             </div>
           </div>
           <div class="message">
@@ -87,7 +112,9 @@
             </p>
             <div class="message-info">
               <p class="message-sender">From Sindre</p>
-              <p class="message-likes">7</p>
+              <p class="message-likes">
+                <span class="material-symbols-outlined"> thumb_up </span> 7
+              </p>
             </div>
           </div>
           <div class="message">
@@ -98,7 +125,9 @@
             </p>
             <div class="message-info">
               <p class="message-sender">From Sindre</p>
-              <p class="message-likes">7</p>
+              <p class="message-likes">
+                <span class="material-symbols-outlined"> thumb_up </span> 7
+              </p>
             </div>
           </div>
           <div class="message">
@@ -109,7 +138,9 @@
             </p>
             <div class="message-info">
               <p class="message-sender">From Sindre</p>
-              <p class="message-likes">7</p>
+              <p class="message-likes">
+                <span class="material-symbols-outlined"> thumb_up </span> 7
+              </p>
             </div>
           </div>
           <div class="message">
@@ -120,11 +151,144 @@
             </p>
             <div class="message-info">
               <p class="message-sender">From Sindre</p>
-              <p class="message-likes">7</p>
+              <p class="message-likes">
+                <span class="material-symbols-outlined"> thumb_up </span> 7
+              </p>
+            </div>
+          </div>
+          <div class="message">
+            <p class="message-receiver">To Leanne</p>
+            <p class="message-text">
+              Leanne! Thank you so much for helping me with the March
+              accounting. Saved so much time because of you! 💜 Frode
+            </p>
+            <div class="message-info">
+              <p class="message-sender">From Sindre</p>
+              <p class="message-likes">
+                <span class="material-symbols-outlined"> thumb_up </span> 7
+              </p>
+            </div>
+          </div>
+          <div class="message">
+            <p class="message-receiver">To Leanne</p>
+            <p class="message-text">
+              Leanne! Thank you so much for helping me with the March
+              accounting. Saved so much time because of you! 💜 Frode
+            </p>
+            <div class="message-info">
+              <p class="message-sender">From Sindre</p>
+              <p class="message-likes">
+                <span class="material-symbols-outlined"> thumb_up </span> 7
+              </p>
+            </div>
+          </div>
+          <div class="message">
+            <p class="message-receiver">To Leanne</p>
+            <p class="message-text">
+              Leanne! Thank you so much for helping me with the March
+              accounting. Saved so much time because of you! 💜 Frode
+            </p>
+            <div class="message-info">
+              <p class="message-sender">From Sindre</p>
+              <p class="message-likes">
+                <span class="material-symbols-outlined"> thumb_up </span> 7
+              </p>
+            </div>
+          </div>
+          <div class="message">
+            <p class="message-receiver">To Leanne</p>
+            <p class="message-text">
+              Leanne! Thank you so much for helping me with the March
+              accounting. Saved so much time because of you! 💜 Frode
+            </p>
+            <div class="message-info">
+              <p class="message-sender">From Sindre</p>
+              <p class="message-likes">
+                <span class="material-symbols-outlined"> thumb_up </span> 7
+              </p>
+            </div>
+          </div>
+          <div class="message">
+            <p class="message-receiver">To Leanne</p>
+            <p class="message-text">
+              Leanne! Thank you so much for helping me with the March
+              accounting. Saved so much time because of you! 💜 Frode
+            </p>
+            <div class="message-info">
+              <p class="message-sender">From Sindre</p>
+              <p class="message-likes">
+                <span class="material-symbols-outlined"> thumb_up </span> 7
+              </p>
+            </div>
+          </div>
+          <div class="message">
+            <p class="message-receiver">To Leanne</p>
+            <p class="message-text">
+              Leanne! Thank you so much for helping me with the March
+              accounting. Saved so much time because of you! 💜 Frode
+            </p>
+            <div class="message-info">
+              <p class="message-sender">From Sindre</p>
+              <p class="message-likes">
+                <span class="material-symbols-outlined"> thumb_up </span> 7
+              </p>
+            </div>
+          </div>
+          <div class="message">
+            <p class="message-receiver">To Leanne</p>
+            <p class="message-text">
+              Leanne! Thank you so much for helping me with the March
+              accounting. Saved so much time because of you! 💜 Frode
+            </p>
+            <div class="message-info">
+              <p class="message-sender">From Sindre</p>
+              <p class="message-likes">
+                <span class="material-symbols-outlined"> thumb_up </span> 7
+              </p>
+            </div>
+          </div>
+          <div class="message">
+            <p class="message-receiver">To Leanne</p>
+            <p class="message-text">
+              Leanne! Thank you so much for helping me with the March
+              accounting. Saved so much time because of you! 💜 Frode
+            </p>
+            <div class="message-info">
+              <p class="message-sender">From Sindre</p>
+              <p class="message-likes">
+                <span class="material-symbols-outlined"> thumb_up </span> 7
+              </p>
+            </div>
+          </div>
+          <div class="message">
+            <p class="message-receiver">To Leanne</p>
+            <p class="message-text">
+              Leanne! Thank you so much for helping me with the March
+              accounting. Saved so much time because of you! 💜 Frode
+            </p>
+            <div class="message-info">
+              <p class="message-sender">From Sindre</p>
+              <p class="message-likes">
+                <span class="material-symbols-outlined"> thumb_up </span> 7
+              </p>
+            </div>
+          </div>
+          <div class="message">
+            <p class="message-receiver">To Leanne</p>
+            <p class="message-text">
+              Leanne! Thank you so much for helping me with the March
+              accounting. Saved so much time because of you! 💜 Frode
+            </p>
+            <div class="message-info">
+              <p class="message-sender">From Sindre</p>
+              <p class="message-likes">
+                <span class="material-symbols-outlined"> thumb_up </span> 7
+              </p>
             </div>
           </div>
         </div>
       </div>
+      <script src="index.js"></script>
     </main>
   </body>
 </html>
