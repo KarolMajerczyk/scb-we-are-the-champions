@@ -1,3 +1,5 @@
+// Imports
+
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
 import {
   getDatabase,
@@ -8,6 +10,8 @@ import {
   onValue,
 } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js";
 
+// Configuration
+
 const firebaseConfig = {
   databaseURL:
     "https://scb-we-are-the-champions-db-default-rtdb.europe-west1.firebasedatabase.app/",
@@ -15,65 +19,136 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
-const endorsementsCollectionInDB = ref(database, "endorsementsCollection");
+const endorsementsDb = ref(database, "endorsements");
 
 localStorage.setItem("items", JSON.stringify([]));
 
-const toggleBtn = document.getElementById("toggle-button");
+// Elements
+
+const toggleFormBtn = document.getElementById("toggle-button");
 const endorsementForm = document.getElementById("endorsement-form");
-const endorsementsCollectionElement = document.getElementById("endorsements");
+const endorsementsEl = document.getElementById("endorsements");
 
-toggleBtn.addEventListener("click", () => {
-  toggleBtn.textContent === " add "
-    ? (toggleBtn.textContent = " close ")
-    : (toggleBtn.textContent = " add ");
+// Controller
 
-  endorsementForm.classList.toggle("hidden");
-});
+toggleFormBtn.addEventListener("click", toggleEndorsementForm);
 
 endorsementForm.addEventListener("submit", () => {
-  const formElements = endorsementForm.elements;
+  const { receiver, content, sender } = getEndorsementFormInputValues();
 
   const endorsement = {
-    receiver: formElements[0].value,
-    content: formElements[1].value,
-    sender: formElements[2].value,
+    receiver,
+    content,
+    sender,
     likes: 0,
   };
 
-  push(endorsementsCollectionInDB, endorsement);
-
-  endorsementForm.reset();
+  addItemToEndorsementsDb(endorsement);
 });
 
-onValue(endorsementsCollectionInDB, (snapshot) => {
+onValue(endorsementsDb, (snapshot) => {
   if (snapshot.exists()) {
-    const endorsementsCollection = Object.entries(snapshot.val());
-    endorsementsCollection.sort(sortItemsByLikesDescending);
+    const endorsements = Object.entries(snapshot.val());
+    endorsements.sort(sortEndorsementsByLikes);
 
-    clearEndorsementsCollectionElement();
+    clearEndorsementsEl();
 
-    for (let i = 0; i < endorsementsCollection.length; i++) {
-      const endorsement = endorsementsCollection[i];
-      appendItemToEndorsementsCollectionElement(endorsement);
+    for (let i = 0; i < endorsements.length; i++) {
+      const endorsement = endorsements[i];
+      appendItemToEndorsementsEl(endorsement);
     }
   } else {
-    endorsementsCollectionElement.innerHTML = "No items here... yet";
+    endorsementsEl.innerHTML = "No items here... yet";
   }
 });
 
-function sortItemsByLikesDescending(a, b) {
+function updateThumbUpEl(id, likes) {
+  const locationOfItem = ref(database, `endorsements/${id}`);
+  const items = JSON.parse(localStorage.getItem("items"));
+
+  if (!items.includes(id)) {
+    saveItemToLocalStorage(id);
+    addLikeToEndorsement(locationOfItem, likes);
+  } else {
+    removeItemFromLocalStorage(id);
+    removeLikeFromEndorsement(locationOfItem, likes);
+  }
+}
+
+// Helpers
+
+function sortEndorsementsByLikes(a, b) {
   return b[1].likes - a[1].likes;
 }
 
-function appendItemToEndorsementsCollectionElement(item) {
+// Model
+
+function addItemToEndorsementsDb(item) {
+  push(endorsementsDb, item);
+}
+
+function removeItemFromEndorsementsDb(id) {
+  const locationOfItem = ref(database, `endorsements/${id}`);
+  remove(locationOfItem);
+}
+
+function addLikeToEndorsement(location, likes) {
+  update(location, {
+    likes: likes + 1,
+  });
+}
+
+function removeLikeFromEndorsement(location, likes) {
+  update(location, {
+    likes: likes - 1,
+  });
+}
+
+function saveItemToLocalStorage(id) {
+  let items = JSON.parse(localStorage.getItem("items"));
+  items.push(id);
+  localStorage.setItem("items", JSON.stringify(items));
+}
+
+function removeItemFromLocalStorage(id) {
+  let items = JSON.parse(localStorage.getItem("items"));
+
+  const position = items.indexOf(id);
+  items.splice(position, 1);
+
+  localStorage.setItem("items", JSON.stringify(items));
+}
+
+// View
+
+function getEndorsementFormInputValues() {
+  const inputs = endorsementForm.elements;
+
+  const receiver = inputs[0].value;
+  const content = inputs[1].value;
+  const sender = inputs[2].value;
+
+  endorsementForm.reset();
+
+  return { receiver, content, sender };
+}
+
+function toggleEndorsementForm() {
+  toggleFormBtn.textContent === " add "
+    ? (toggleFormBtn.textContent = " close ")
+    : (toggleFormBtn.textContent = " add ");
+
+  endorsementForm.classList.toggle("hidden");
+}
+
+function appendItemToEndorsementsEl(item) {
   const id = item[0];
   const { receiver, content, sender, likes } = item[1];
 
-  let endorsementElement = document.createElement("div");
-  endorsementElement.classList.add("message");
+  let endorsementEl = document.createElement("div");
+  endorsementEl.classList.add("message");
 
-  endorsementElement.innerHTML = `
+  endorsementEl.innerHTML = `
         <p class="message-receiver">To ${receiver}</p>
         <p class="message-text">${content}</p>
         <div class="message-info">
@@ -84,68 +159,28 @@ function appendItemToEndorsementsCollectionElement(item) {
         </div>
     `;
 
-  let thumbUpElement = document.createElement("span");
-  thumbUpElement.classList.add("material-symbols-outlined");
-  thumbUpElement.textContent = " thumb_up ";
+  let thumbUpEl = document.createElement("span");
+  thumbUpEl.classList.add("material-symbols-outlined");
+  thumbUpEl.textContent = " thumb_up ";
 
   const items = JSON.parse(localStorage.getItem("items"));
 
   if (items.includes(id)) {
-    thumbUpElement.classList.add("liked");
+    thumbUpEl.classList.add("liked");
   }
 
-  let likesElement = endorsementElement.querySelector(".message-likes");
-  likesElement.appendChild(thumbUpElement);
+  let likesElement = endorsementEl.querySelector(".message-likes");
+  likesElement.appendChild(thumbUpEl);
 
-  endorsementElement.addEventListener("dblclick", () =>
-    removeItemFromEndorsementCollectionInDB(id)
+  endorsementEl.addEventListener("dblclick", () =>
+    removeItemFromEndorsementsDb(id)
   );
 
-  thumbUpElement.addEventListener("click", () =>
-    updateThumbUpElement(id, likes)
-  );
+  thumbUpEl.addEventListener("click", () => updateThumbUpEl(id, likes));
 
-  endorsementsCollectionElement.appendChild(endorsementElement);
+  endorsementsEl.appendChild(endorsementEl);
 }
 
-function removeItemFromEndorsementCollectionInDB(id) {
-  const locationOfItem = ref(database, `endorsementsCollection/${id}`);
-
-  remove(locationOfItem);
-}
-
-function updateThumbUpElement(id, likes) {
-  const locationOfItem = ref(database, `endorsementsCollection/${id}`);
-  const items = JSON.parse(localStorage.getItem("items"));
-
-  if (!items.includes(id)) {
-    saveItemInLocalStorage(id);
-    update(locationOfItem, {
-      likes: likes + 1,
-    });
-  } else {
-    removeItemFromLocalStorage(id);
-    update(locationOfItem, {
-      likes: likes - 1,
-    });
-  }
-}
-
-function clearEndorsementsCollectionElement() {
-  endorsementsCollectionElement.innerHTML = "";
-}
-
-function saveItemInLocalStorage(id) {
-  let items = JSON.parse(localStorage.getItem("items"));
-  items.push(id);
-  localStorage.setItem("items", JSON.stringify(items));
-}
-
-function removeItemFromLocalStorage(id) {
-  let items = JSON.parse(localStorage.getItem("items"));
-
-  const index = items.indexOf(id);
-  items.splice(index, 1);
-
-  localStorage.setItem("items", JSON.stringify(items));
+function clearEndorsementsEl() {
+  endorsementsEl.innerHTML = "";
 }
