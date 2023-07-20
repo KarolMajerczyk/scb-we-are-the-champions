@@ -251,10 +251,13 @@ body {
 }
 
 .message-likes span {
-  color: var(--clr-accent-400);
   transition: all 0.3s ease;
 }
 
 .message-likes span:hover {
   transform: scale(1.3);
+}
+
+.message-likes .liked {
+  color: var(--clr-accent-400);
 }
