@@ -34,7 +34,11 @@ const endorsementsEl = document.getElementById("endorsements");
 toggleFormBtn.addEventListener("click", toggleEndorsementForm);
 
 endorsementForm.addEventListener("submit", () => {
-  const { receiver, content, sender } = getEndorsementFormInputValues();
+  const inputs = endorsementForm.elements;
+
+  const receiver = inputs[0].value;
+  const content = inputs[1].value;
+  const sender = inputs[2].value;
 
   const endorsement = {
     receiver,
@@ -44,6 +48,8 @@ endorsementForm.addEventListener("submit", () => {
   };
 
   addItemToEndorsementsDb(endorsement);
+
+  endorsementForm.reset();
 });
 
 onValue(endorsementsDb, (snapshot) => {
@@ -73,6 +79,33 @@ function updateThumbUpEl(id, likes) {
     removeItemFromLocalStorage(id);
     removeLikeFromEndorsement(locationOfItem, likes);
   }
+}
+
+function appendItemToEndorsementsEl(item) {
+  const id = item[0];
+  const { receiver, content, sender, likes } = item[1];
+
+  const endorsementEl = createEndorsementEl(receiver, content, sender, likes);
+  const thumbUpEl = createThumbsUpEl();
+
+  const items = JSON.parse(localStorage.getItem("items"));
+
+  if (items.includes(id)) {
+    thumbUpEl.classList.add("liked");
+  }
+
+  let likesElement = endorsementEl.querySelector(".message-likes");
+  likesElement.appendChild(thumbUpEl);
+
+  endorsementEl.addEventListener("dblclick", (e) => {
+    if (e.target.textContent !== " thumb_up ") {
+      removeItemFromEndorsementsDb(id);
+    }
+  });
+
+  thumbUpEl.addEventListener("click", () => updateThumbUpEl(id, likes));
+
+  endorsementsEl.appendChild(endorsementEl);
 }
 
 // Helpers
@@ -121,31 +154,8 @@ function removeItemFromLocalStorage(id) {
 
 // View
 
-function getEndorsementFormInputValues() {
-  const inputs = endorsementForm.elements;
-
-  const receiver = inputs[0].value;
-  const content = inputs[1].value;
-  const sender = inputs[2].value;
-
-  endorsementForm.reset();
-
-  return { receiver, content, sender };
-}
-
-function toggleEndorsementForm() {
-  toggleFormBtn.textContent === " add "
-    ? (toggleFormBtn.textContent = " close ")
-    : (toggleFormBtn.textContent = " add ");
-
-  endorsementForm.classList.toggle("hidden");
-}
-
-function appendItemToEndorsementsEl(item) {
-  const id = item[0];
-  const { receiver, content, sender, likes } = item[1];
-
-  let endorsementEl = document.createElement("div");
+function createEndorsementEl(receiver, content, sender, likes) {
+  const endorsementEl = document.createElement("div");
   endorsementEl.classList.add("message");
 
   endorsementEl.innerHTML = `
@@ -159,26 +169,23 @@ function appendItemToEndorsementsEl(item) {
         </div>
     `;
 
-  let thumbUpEl = document.createElement("span");
+  return endorsementEl;
+}
+
+function createThumbsUpEl() {
+  const thumbUpEl = document.createElement("span");
   thumbUpEl.classList.add("material-symbols-outlined");
   thumbUpEl.textContent = " thumb_up ";
 
-  const items = JSON.parse(localStorage.getItem("items"));
+  return thumbUpEl;
+}
 
-  if (items.includes(id)) {
-    thumbUpEl.classList.add("liked");
-  }
+function toggleEndorsementForm() {
+  toggleFormBtn.textContent === " add "
+    ? (toggleFormBtn.textContent = " close ")
+    : (toggleFormBtn.textContent = " add ");
 
-  let likesElement = endorsementEl.querySelector(".message-likes");
-  likesElement.appendChild(thumbUpEl);
-
-  endorsementEl.addEventListener("dblclick", () =>
-    removeItemFromEndorsementsDb(id)
-  );
-
-  thumbUpEl.addEventListener("click", () => updateThumbUpEl(id, likes));
-
-  endorsementsEl.appendChild(endorsementEl);
+  endorsementForm.classList.toggle("hidden");
 }
 
 function clearEndorsementsEl() {
