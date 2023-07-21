@@ -136,7 +136,7 @@ body {
   margin-top: 10px;
 }
 
-#toggle-button {
+#toggle-endorsement-form {
   position: absolute;
   top: 30px;
   right: 30px;
@@ -149,7 +149,7 @@ body {
   transition: all 0.3s ease;
 }
 
-#toggle-button:hover {
+#toggle-endorsement-form:hover {
   transform: scale(1.1);
 }
 
@@ -162,7 +162,7 @@ body {
     display: grid;
   }
 
-  #toggle-button {
+  #toggle-endorsement-form {
     display: none;
   }
 }
@@ -207,7 +207,7 @@ body {
   gap: 25px;
 }
 
-.message {
+.endorsement {
   background: var(--clr-secondary-100);
   color: var(--clr-primary-800);
   font-size: var(--fs-300);
@@ -225,22 +225,22 @@ body {
   transition: all 0.3s ease;
 }
 
-.message:hover {
+.endorsement:hover {
   transform: scale(1.02);
 }
 
-.message-receiver,
-.message-sender {
+.endorsement-receiver,
+.endorsement-sender {
   font-weight: var(--fw-bold);
 }
 
-.message-info {
+.endorsement-info {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.message-likes {
+.endorsement-likes {
   color: var(--clr-primary-900);
   font-weight: var(--fw-bold);
   font-size: var(--fs-400);
@@ -250,14 +250,14 @@ body {
   gap: 10px;
 }
 
-.message-likes span {
+.endorsement-likes span {
   transition: all 0.3s ease;
 }
 
-.message-likes span:hover {
+.endorsement-likes span:hover {
   transform: scale(1.3);
 }
 
-.message-likes .liked {
+.endorsement-likes .liked {
   color: var(--clr-accent-400);
 }

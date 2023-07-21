@@ -2,7 +2,10 @@ import { onValue } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-data
 
 import { endorsementsDB } from "./scripts/endorsementsDB.js";
 
-import { toggleFormBtn, endorsementForm } from "./scripts/endorsementsView.js";
+import {
+  toggleEndorsementFormBtn,
+  endorsementFormEl,
+} from "./scripts/endorsementsView.js";
 
 import {
   toggleEndorsementForm,
@@ -12,9 +15,9 @@ import {
 
 localStorage.setItem("items", JSON.stringify([]));
 
-toggleFormBtn.addEventListener("click", toggleEndorsementForm);
+toggleEndorsementFormBtn.addEventListener("click", toggleEndorsementForm);
 
-endorsementForm.addEventListener("submit", (e) =>
+endorsementFormEl.addEventListener("submit", (e) =>
   createEndorsementItem(e.target)
 );
 

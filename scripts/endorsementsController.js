@@ -36,8 +36,6 @@ export function createEndorsementItem(form) {
   form.reset();
 }
 
-//
-
 export function updateEndorsementsElOnDBChange(snapshot) {
   clearEndorsementsEl("No items here... yet");
 
@@ -64,7 +62,7 @@ function updateEndorsementsEl(endorsements) {
       thumbUpEl.classList.add("liked");
     }
 
-    let likesElement = endorsementEl.querySelector(".message-likes");
+    let likesElement = endorsementEl.querySelector(".endorsement-likes");
     likesElement.appendChild(thumbUpEl);
 
     endorsementEl.addEventListener("dblclick", (e) => {

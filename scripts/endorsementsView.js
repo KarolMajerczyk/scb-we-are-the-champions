@@ -1,13 +1,15 @@
-export const toggleFormBtn = document.getElementById("toggle-button");
-export const endorsementForm = document.getElementById("endorsement-form");
+export const toggleEndorsementFormBtn = document.getElementById(
+  "toggle-endorsement-form"
+);
+export const endorsementFormEl = document.getElementById("endorsement-form");
 export const endorsementsEl = document.getElementById("endorsements");
 
 export function toggleEndorsementFormEl() {
-  toggleFormBtn.textContent === " add "
-    ? (toggleFormBtn.textContent = " close ")
-    : (toggleFormBtn.textContent = " add ");
+  toggleEndorsementFormBtn.textContent === " add "
+    ? (toggleEndorsementFormBtn.textContent = " close ")
+    : (toggleEndorsementFormBtn.textContent = " add ");
 
-  endorsementForm.classList.toggle("hidden");
+  endorsementFormEl.classList.toggle("hidden");
 }
 
 export function clearEndorsementsEl(message) {
@@ -18,14 +20,14 @@ export function clearEndorsementsEl(message) {
 
 export function createEndorsementEl(receiver, content, sender, likes) {
   const endorsementEl = document.createElement("div");
-  endorsementEl.classList.add("message");
+  endorsementEl.classList.add("endorsement");
 
   endorsementEl.innerHTML = `
-          <p class="message-receiver">To ${receiver}</p>
-          <p class="message-text">${content}</p>
-          <div class="message-info">
-              <p class="message-sender">From ${sender}</p>
-              <p class="message-likes">
+          <p class="endorsement-receiver">To ${receiver}</p>
+          <p class="endorsement-text">${content}</p>
+          <div class="endorsement-info">
+              <p class="endorsement-sender">From ${sender}</p>
+              <p class="endorsement-likes">
               ${likes}
               </p>
           </div>
