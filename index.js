@@ -17,8 +17,9 @@ localStorage.setItem("items", JSON.stringify([]));
 
 toggleEndorsementFormBtn.addEventListener("click", toggleEndorsementForm);
 
-endorsementFormEl.addEventListener("submit", (e) =>
-  createEndorsementItem(e.target)
-);
+endorsementFormEl.addEventListener("submit", (e) => {
+  e.preventDefault();
+  createEndorsementItem(e.target);
+});
 
 onValue(endorsementsDB, (snapshot) => updateEndorsementsElOnDBChange(snapshot));
